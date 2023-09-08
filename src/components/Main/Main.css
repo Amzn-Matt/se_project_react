@@ -1,0 +1,47 @@
+.weather {
+  position: relative;
+  padding: 0 40px;
+}
+
+.weather__info {
+  position: absolute;
+  top: 20px;
+  left: 45px;
+  color: #fff;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 40px; /* 111.111% */
+}
+
+.weather__image {
+  max-width: 100%;
+  max-height: 80px;
+  border-radius: 12px;
+}
+
+.cards__header {
+  color: #000;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin: 40px 0 40px 34px;
+}
+
+.cards__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 17px;
+  margin-top: 34px;
+}
+
+.cards__image {
+  width: 328px;
+  height: 328px;
+}
+
+.cards__name {
+  text-align: center;
+}
