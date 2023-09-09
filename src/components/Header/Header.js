@@ -1,13 +1,13 @@
 import "./Header.css";
 
-function Header() {
+function Header({ onOpenModal }) {
   return (
     <div>
       <header className="header">
         <div className="header__logo">
           <div>
             <img
-              src={require("../../Images/Logo.svg").default}
+              src={require("../../images/Logo.svg").default}
               alt="App logo"
             />
           </div>
@@ -16,12 +16,14 @@ function Header() {
 
         <div className="header__profile">
           <div>
-            <button type="text"> + Add New Clothes</button>
+            <button type="text" onClick={onOpenModal}>
+              + Add New Clothes
+            </button>
           </div>
           <div>Matthew Sanchez</div>
           <div>
             <img
-              src={require("../../Images/Avatar.svg").default}
+              src={require("../../images/Avatar.svg").default}
               alt="Avatar icon"
             />
           </div>
