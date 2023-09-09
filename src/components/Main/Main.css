@@ -16,8 +16,11 @@
 
 .weather__image {
   max-width: 100%;
-  max-height: 80px;
   border-radius: 12px;
+}
+
+.main {
+  padding: 0 20px;
 }
 
 .cards__header {
@@ -40,6 +43,7 @@
 .cards__image {
   width: 328px;
   height: 328px;
+  border-radius: 10px;
 }
 
 .cards__name {
