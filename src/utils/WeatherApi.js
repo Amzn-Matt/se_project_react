@@ -1,5 +1,5 @@
 const latitude = 40.7128;
-const longitude = 74.006;
+const longitude = -74.006;
 const APIkey = "13f73a0fc9c7844102dd581da3e814e7";
 
 export const getWeatherApi = () => {
@@ -18,4 +18,9 @@ export const parseWeatherData = (data) => {
   const main = data.main;
   const temperature = main && main.temp;
   return Math.ceil(temperature);
+};
+
+export const parseLocationData = (data) => {
+  const userLocation = data.name;
+  return userLocation;
 };
