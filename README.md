@@ -68,3 +68,17 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+**Project Features**
+
+- React
+- JavaScript
+- React Hooks
+- API
+- Semantic HTML5
+- Avanced CSS
+- Flexbox
+
+**Plans to improve this project**
+
+At the moment the App can only dynamically render weather Temperature. I plan on making the weather card update dynamically as well with the current weather forecast. Also utilize a server to have users update profile information. I also plan to make all the forms functional and add form validation. And I plan to eventually give this project a responsive design.
