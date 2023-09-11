@@ -5,8 +5,9 @@
 .weather__info {
   position: absolute;
   top: 20px;
-  left: 45px;
+  left: 12px;
   color: #fff;
+  font-family: "Cabinet Grotesk", sans-serif;
   font-size: 36px;
   font-style: normal;
   font-weight: 700;
@@ -22,8 +23,9 @@
   padding: 0 40px;
 }
 
-.cards__header {
+.card__header {
   color: #000;
+  font-family: "Cabinet Grotesk", sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
@@ -31,7 +33,7 @@
   margin: 40px 0 40px 34px;
 }
 
-.cards__list {
+.card__list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -39,12 +41,29 @@
   margin-top: 34px;
 }
 
-.cards__image {
+.card {
+  position: relative;
+}
+
+.card__image {
   width: 328px;
   height: 328px;
   border-radius: 10px;
 }
 
-.cards__name {
+.card__name {
+  position: absolute;
+  top: 10px;
+  right: 125px;
   text-align: center;
+  background-color: #fff;
+  border-radius: 4px;
+  color: rgba(0, 0, 0, 0.6);
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+  margin: 16px 0 0 0;
+  padding: 2px 12px;
 }
