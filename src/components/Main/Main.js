@@ -19,8 +19,6 @@ function Main({ weatherTemp, onSelectCard }) {
     return item.weather.toLowerCase() === weatherType;
   });
 
-  console.log(filteredCards);
-
   return (
     <main className="main">
       <WeatherCard day={true} type={"rainy"} weatherTemp={weatherTemp} />
@@ -30,11 +28,11 @@ function Main({ weatherTemp, onSelectCard }) {
           Today is {weatherTemp}°F / You may want to wear:
         </div>
 
-        <div className="card__list">
+        <ul className="card__list">
           {filteredCards.map((item) => (
             <ItemCard key={item._id} item={item} onSelectCard={onSelectCard} />
           ))}
-        </div>
+        </ul>
       </section>
     </main>
   );

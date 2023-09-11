@@ -39,10 +39,12 @@
   justify-content: center;
   gap: 17px;
   margin-top: 34px;
+  list-style: none;
 }
 
 .card {
   position: relative;
+  cursor: pointer;
 }
 
 .card__image {

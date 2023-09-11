@@ -1,6 +1,6 @@
 const ItemCard = ({ item, onSelectCard }) => {
   return (
-    <div className="card">
+    <li className="card">
       <img
         src={item.link}
         alt="Picture of Item"
@@ -8,7 +8,7 @@ const ItemCard = ({ item, onSelectCard }) => {
         onClick={() => onSelectCard(item)}
       />
       <p className="card__name">{item.name}</p>
-    </div>
+    </li>
   );
 };
 
