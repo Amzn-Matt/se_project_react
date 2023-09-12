@@ -1,11 +1,12 @@
 import "./Footer.css";
 
 function Footer() {
+  const year = new Date("2023-09-12").getFullYear();
   return (
     <footer className="footer">
       <p>Developed by Matthew Sanchez</p>
 
-      <p>2022</p>
+      <p>{year}</p>
     </footer>
   );
 }
