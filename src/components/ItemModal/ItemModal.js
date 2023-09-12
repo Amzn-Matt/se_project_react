@@ -8,8 +8,12 @@ function ItemModal({ selectedCard, onCloseModal }) {
           className="modal__preview-close-btn"
           type="button"
           onClick={onCloseModal}
-        ></button>
-        <img className="modal__image" src={selectedCard.link} />
+        />
+        <img
+          className="modal__image"
+          src={selectedCard.link}
+          alt={selectedCard.name}
+        />
         <p className="modal__preview-name">{selectedCard.name}</p>
         <p className="modal__preview-type"> Weather: {selectedCard.weather}</p>
       </div>
