@@ -3,7 +3,7 @@ const longitude = -74.006;
 const APIkey = "13f73a0fc9c7844102dd581da3e814e7";
 
 export const getWeatherApi = () => {
-  const WeatherApi = fetch(
+  const weatherApi = fetch(
     `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${APIkey}`
   ).then((res) => {
     if (res.ok) {
@@ -11,7 +11,7 @@ export const getWeatherApi = () => {
     }
     return Promise.reject(`Error: ${res.status}`);
   });
-  return WeatherApi;
+  return weatherApi;
 };
 
 export const parseWeatherData = (data) => {
@@ -24,3 +24,9 @@ export const parseLocationData = (data) => {
   const userLocation = data.name;
   return userLocation;
 };
+
+// export const parseForcastData = (data) => {
+//   const weather = data.weather;
+//   const forcast = weather && weather[0].id;
+//   return forcast;
+// };
