@@ -1,12 +1,12 @@
 import "./Header.css";
-import Logo from "../../images/Logo.svg";
-import Avatar from "../../images/Avatar.svg";
+import logo from "../../images/Logo.svg";
+import avatar from "../../images/Avatar.svg";
 
 function Header({ onOpenModal, userLocation }) {
   return (
     <header className="header">
       <div className="header__logo">
-        <img src={Logo} alt="App logo" />
+        <img src={logo} alt="App logo" />
 
         <p className="header__date">September 10, {userLocation}</p>
       </div>
@@ -19,7 +19,7 @@ function Header({ onOpenModal, userLocation }) {
         </div>
         <div>Matthew Sanchez</div>
         <div>
-          <img src={Avatar} alt="Avatar icon" />
+          <img src={avatar} alt="Avatar icon" />
         </div>
       </div>
     </header>
