@@ -1,11 +1,7 @@
 import "./ClothesSection.css";
 import ItemCard from "../../ItemCard/ItemCard";
 
-const ClothesSection = ({
-  defaultClothingItems,
-  onSelectCard,
-  onOpenModal,
-}) => {
+const ClothesSection = ({ clothingItems, onSelectCard, onOpenModal }) => {
   return (
     <section className="clothes-section">
       <div className="clothes-section__container">
@@ -19,7 +15,7 @@ const ClothesSection = ({
         </button>
       </div>
       <ul className="clothes-section__cards">
-        {defaultClothingItems.map((item) => (
+        {clothingItems.map((item) => (
           <ItemCard key={item._id} item={item} onSelectCard={onSelectCard} />
         ))}
       </ul>
