@@ -15,7 +15,11 @@ import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperature
 import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
 import Profile from "../Profile/Profile";
 import AddItemModal from "../AddItemModal/AddItemModal";
-import { getClothingItems, addNewClothingItem } from "../../utils/api";
+import {
+  getClothingItems,
+  addNewClothingItem,
+  deleteClothingItems,
+} from "../../utils/api";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
@@ -55,6 +59,20 @@ function App() {
         setClothingItems([item, ...clothingItems]);
         handleCloseModal();
         console.log(item);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleDeleteItemSubmit = (selectedCard) => {
+    deleteClothingItems(selectedCard)
+      .then(() => {
+        const newItem = clothingItems.filter((item) => {
+          return item._id !== selectedCard._id;
+        });
+        setClothingItems(newItem);
+        handleCloseModal();
       })
       .catch((error) => {
         console.log(error);
@@ -120,6 +138,7 @@ function App() {
           <ItemModal
             selectedCard={selectedCard}
             onCloseModal={handleCloseModal}
+            onDeleteItem={handleDeleteItemSubmit}
           />
         )}
         <Footer />
