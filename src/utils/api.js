@@ -23,9 +23,23 @@ export const addNewClothingItem = (item) => {
     },
     body: JSON.stringify({
       name: item.name,
-      imageUrl: item.url,
+      imageUrl: item.imageUrl,
       weather: item.weatherType,
     }),
+  }).then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Error: ${res.status}`);
+  });
+};
+
+export const deleteClothingItems = (id) => {
+  return fetch(`${baseUrl}/items/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
   }).then((res) => {
     if (res.ok) {
       return res.json();
