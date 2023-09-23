@@ -10,6 +10,7 @@
 
 .modal__image {
   max-width: 498px;
+  max-height: 490px;
   width: 100%;
   border-top-right-radius: 16px;
   border-top-left-radius: 16px;
@@ -44,4 +45,19 @@
   font-weight: 700;
   line-height: 24px; /* 120% */
   margin: 0 0 32px 32px;
+}
+
+.modal__preview-delete-btn {
+  position: absolute;
+  right: 34px;
+  bottom: 72px;
+  color: #ff4d00;
+  font-family: Cabinet Grotesk;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  line-height: 24px; /* 120% */
 }
