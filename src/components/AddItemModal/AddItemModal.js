@@ -3,7 +3,7 @@ import { useState } from "react";
 
 const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
   const [name, setName] = useState("");
-  const [url, setUrl] = useState("");
+  const [imageUrl, setimageUrl] = useState("");
   const [weatherType, setWeatherType] = useState("");
 
   const handleNameChange = (e) => {
@@ -13,7 +13,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
 
   const handleUrlChange = (e) => {
     console.log(e.target.value);
-    setUrl(e.target.value);
+    setimageUrl(e.target.value);
   };
 
   const handleWeatherTypeChange = (e) => {
@@ -21,12 +21,17 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
     setWeatherType(e.target.value);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDeafult();
+    onAddItem({ name, imageUrl, weatherType });
+  };
+
   return (
     <ModalWithForm
       title="New garment"
       onCloseModal={onCloseModal}
       isOpen={isOpen}
-      onSubmit={(e) => onAddItem(e, { name, url, weatherType })}
+      onSubmit={handleSubmit}
     >
       <label className="modal__form-label">
         Name
@@ -50,7 +55,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
           type="url"
           name="link"
           placeholder="Image URL"
-          value={url}
+          value={imageUrl}
           onChange={handleUrlChange}
           required
         />
