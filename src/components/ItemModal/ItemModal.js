@@ -11,7 +11,7 @@ function ItemModal({ selectedCard, onCloseModal }) {
         />
         <img
           className="modal__image"
-          src={selectedCard.link}
+          src={selectedCard.imageUrl}
           alt={selectedCard.name}
         />
         <p className="modal__preview-name">{selectedCard.name}</p>
