@@ -14,8 +14,8 @@ import { useEffect, useState } from "react";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
 import Profile from "../Profile/Profile";
-import { defaultClothingItems } from "../../utils/Constants";
 import AddItemModal from "../AddItemModal/AddItemModal";
+import { getClothingItems, addNewClothingItem } from "../../utils/api";
 
 function App() {
   const [activeModal, setActiveModal] = useState("");
@@ -24,6 +24,7 @@ function App() {
   const [location, setLocation] = useState("");
   // const [forcast, setForcast] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [clothingItems, setClothingItems] = useState([]);
 
   const handleOpenModal = () => {
     setActiveModal("open");
@@ -43,11 +44,21 @@ function App() {
       : setCurrentTemperatureUnit("F");
   };
 
-  const onAddItem = (e, values) => {
-    e.preventDefault();
-    console.log(e);
-    console.log(values);
-    handleCloseModal();
+  const handleAddNewItemSubmit = (values) => {
+    const item = {
+      name: values.name,
+      imageUrl: values.imageUrl,
+      weather: values.weatherType,
+    };
+    addNewClothingItem(item)
+      .then((item) => {
+        setClothingItems([item, ...clothingItems]);
+        handleCloseModal();
+        console.log(item);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -66,6 +77,16 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    getClothingItems()
+      .then((data) => {
+        setClothingItems(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <div>
       <CurrentTemperatureUnitContext.Provider
@@ -74,11 +95,15 @@ function App() {
         <Header onOpenModal={handleOpenModal} userLocation={location} />
         <Switch>
           <Route exact path="/">
-            <Main onSelectCard={handleSelectedCard} weatherTemp={temp} />
+            <Main
+              onSelectCard={handleSelectedCard}
+              weatherTemp={temp}
+              clothingItems={clothingItems}
+            />
           </Route>
           <Route path="/profile">
             <Profile
-              defaultClothingItems={defaultClothingItems}
+              clothingItems={clothingItems}
               onSelectCard={handleSelectedCard}
               onOpenModal={handleOpenModal}
             />
@@ -88,7 +113,7 @@ function App() {
           <AddItemModal
             isOpen={activeModal === "open"}
             onCloseModal={handleCloseModal}
-            onAddItem={onAddItem}
+            onAddItem={handleAddNewItemSubmit}
           />
         )}
         {activeModal === "preview" && (
