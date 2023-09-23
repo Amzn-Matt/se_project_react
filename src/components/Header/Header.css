@@ -4,12 +4,6 @@
   padding: 32px 40px 28px 40px;
   justify-content: space-between;
   align-items: center;
-  color: #000;
-  font-family: "Cabinet Grotesk", sans-serif;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 24px; /* 120% */
 }
 
 .header__logo {
@@ -20,6 +14,12 @@
 }
 
 .header__date {
+  color: #000;
+  font-family: Cabinet Grotesk;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 120% */
   margin: 0;
 }
 
@@ -40,4 +40,17 @@
   background-color: #fff;
   border: none;
   cursor: pointer;
+}
+
+.header__name {
+  color: #000;
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 120% */
+}
+
+a {
+  text-decoration: none;
 }
