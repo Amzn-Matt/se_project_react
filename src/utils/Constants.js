@@ -46,12 +46,12 @@ export const WeatherOptions = [
   {
     url: require("../images/Day/cloudy.svg").default,
     day: true,
-    type: "cloudy",
+    type: "clouds",
   },
   {
     url: require("../images/Day/rainy.svg").default,
     day: true,
-    type: "rainy",
+    type: "rain",
   },
   {
     url: require("../images/Day/snow.svg").default,
@@ -67,7 +67,7 @@ export const WeatherOptions = [
   {
     url: require("../images/Night/cloudy-night.svg").default,
     day: false,
-    type: "cloudy",
+    type: "clouds",
   },
   {
     url: require("../images/Night/night.svg").default,
@@ -77,7 +77,7 @@ export const WeatherOptions = [
   {
     url: require("../images/Night/rain-night.svg").default,
     day: false,
-    type: "rainy",
+    type: "rain",
   },
   {
     url: require("../images/Night/snow-night.svg").default,
