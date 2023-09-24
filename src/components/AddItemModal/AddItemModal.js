@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useState } from "react";
 
@@ -7,17 +8,14 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
   const [weatherType, setWeatherType] = useState("");
 
   const handleNameChange = (e) => {
-    console.log(e.target.value);
     setName(e.target.value);
   };
 
   const handleUrlChange = (e) => {
-    console.log(e.target.value);
     setimageUrl(e.target.value);
   };
 
   const handleWeatherTypeChange = (e) => {
-    console.log(e.target.value);
     setWeatherType(e.target.value);
   };
 
@@ -25,6 +23,14 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
     e.preventDefault();
     onAddItem({ name, imageUrl, weatherType });
   };
+
+  useEffect(() => {
+    if (!isOpen) {
+      setName("");
+      setimageUrl("");
+      setWeatherType("");
+    }
+  }, [isOpen]);
 
   return (
     <ModalWithForm
