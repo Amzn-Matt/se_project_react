@@ -32,8 +32,21 @@ export const parseLocationData = (data) => {
   return userLocation;
 };
 
-// export const parseForcastData = (data) => {
-//   const weather = data.weather;
-//   const forcast = weather && weather[0].id;
-//   return forcast;
-// };
+export const parseForcastData = (data) => {
+  const weather = data.weather;
+  const forcast = weather && weather[0].main.toLowerCase();
+  return forcast;
+};
+
+export const parseTimeOfDay = (data) => {
+  const currentTime = Date.now();
+  const timeOfDay = data.sys;
+  const sunrise = timeOfDay.sunrise;
+  const sunset = timeOfDay.sunset;
+
+  if (currentTime >= sunrise && !currentTime < sunset) {
+    return true;
+  } else {
+    return false;
+  }
+};
