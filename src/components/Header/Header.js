@@ -5,6 +5,11 @@ import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 function Header({ onOpenModal, userLocation }) {
+  const currentDate = new Date().toLocaleString("default", {
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <header className="header">
       <div className="header__logo">
@@ -12,7 +17,9 @@ function Header({ onOpenModal, userLocation }) {
           <img src={logo} alt="App logo" />
         </Link>
 
-        <p className="header__date">September 10, {userLocation}</p>
+        <p className="header__date">
+          {currentDate}, {userLocation}
+        </p>
       </div>
 
       <div className="header__profile">
