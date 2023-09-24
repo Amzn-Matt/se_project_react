@@ -2,17 +2,19 @@ import React from "react";
 
 const baseUrl = "http://localhost:3001";
 
+export const checkResponse = (res) => {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Error: ${res.status}`);
+};
+
 export const getClothingItems = () => {
   return fetch(`${baseUrl}/items`, {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Error: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
 
 export const addNewClothingItem = (item) => {
@@ -26,12 +28,7 @@ export const addNewClothingItem = (item) => {
       imageUrl: item.imageUrl,
       weather: item.weather,
     }),
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Error: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
 
 export const deleteClothingItems = (id) => {
@@ -40,10 +37,5 @@ export const deleteClothingItems = (id) => {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(`Error: ${res.status}`);
-  });
+  }).then(checkResponse);
 };
