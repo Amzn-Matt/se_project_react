@@ -24,7 +24,7 @@ export const WeatherOptions = [
     day: true,
     type: "storm",
   },
-  { url: require("../images/Day/fog.svg").default, day: true, type: "fog" },
+  { url: require("../images/Day/fog.svg").default, day: true, type: "mist" },
   {
     url: require("../images/Night/cloudy-night.svg").default,
     day: false,
@@ -53,6 +53,6 @@ export const WeatherOptions = [
   {
     url: require("../images/Night/fog-night.svg").default,
     day: false,
-    type: "fog",
+    type: "mist",
   },
 ];
