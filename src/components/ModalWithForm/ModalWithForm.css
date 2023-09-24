@@ -94,6 +94,7 @@
   font-weight: 700;
   line-height: 20px; /* 125% */
   gap: 8px;
+  accent-color: #000;
 }
 
 .modal__form-radio-btn {
