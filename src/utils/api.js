@@ -24,7 +24,7 @@ export const addNewClothingItem = (item) => {
     body: JSON.stringify({
       name: item.name,
       imageUrl: item.imageUrl,
-      weather: item.weatherType,
+      weather: item.weather,
     }),
   }).then((res) => {
     if (res.ok) {
