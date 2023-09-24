@@ -1,20 +1,21 @@
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
-import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import ItemModal from "../ItemModal/ItemModal";
 import Footer from "../Footer/Footer";
 import {
   getWeatherApi,
   parseWeatherData,
   parseLocationData,
-  // parseForcastData,
+  parseForcastData,
+  parseTimeOfDay,
 } from "../../utils/WeatherApi";
 import { useEffect, useState } from "react";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
 import Profile from "../Profile/Profile";
 import AddItemModal from "../AddItemModal/AddItemModal";
+import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import {
   getClothingItems,
   addNewClothingItem,
@@ -26,7 +27,8 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [temp, setTemp] = useState(0);
   const [location, setLocation] = useState("");
-  // const [forcast, setForcast] = useState({});
+  const [forcast, setForcast] = useState({});
+  const [day, setDay] = useState(true);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [clothingItems, setClothingItems] = useState([]);
 
@@ -35,6 +37,10 @@ function App() {
   };
   const handleCloseModal = () => {
     setActiveModal("");
+  };
+
+  const handleOpenConfirmationModal = () => {
+    setActiveModal("confirm");
   };
 
   const handleSelectedCard = (card) => {
@@ -58,7 +64,6 @@ function App() {
       .then((item) => {
         setClothingItems([item, ...clothingItems]);
         handleCloseModal();
-        console.log(item);
       })
       .catch((error) => {
         console.log(error);
@@ -69,7 +74,7 @@ function App() {
     deleteClothingItems(selectedCard)
       .then(() => {
         const newItem = clothingItems.filter((item) => {
-          return item._id !== selectedCard._id;
+          return item._id !== selectedCard;
         });
         setClothingItems(newItem);
         handleCloseModal();
@@ -86,9 +91,12 @@ function App() {
         setTemp(temperature);
         const locationData = parseLocationData(data);
         setLocation(locationData);
-        // const forcastData = parseForcastData(data);
-        // setForcast(forcastData);
-        // console.log(forcastData);
+        const forcastData = parseForcastData(data);
+        setForcast(forcastData);
+        console.log(forcastData);
+        const currentTimeOfDay = parseTimeOfDay(data);
+        setDay(currentTimeOfDay);
+        console.log(currentTimeOfDay);
       })
       .catch((err) => {
         console.log(err);
@@ -105,6 +113,19 @@ function App() {
       });
   }, []);
 
+  useEffect(() => {
+    if (!activeModal);
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        handleCloseModal();
+      }
+    };
+    document.addEventListener("keydown", handleEscClose);
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]);
+
   return (
     <div>
       <CurrentTemperatureUnitContext.Provider
@@ -117,6 +138,8 @@ function App() {
               onSelectCard={handleSelectedCard}
               weatherTemp={temp}
               clothingItems={clothingItems}
+              type={forcast}
+              day={day}
             />
           </Route>
           <Route path="/profile">
@@ -136,6 +159,13 @@ function App() {
         )}
         {activeModal === "preview" && (
           <ItemModal
+            selectedCard={selectedCard}
+            onCloseModal={handleCloseModal}
+            onOpenModal={handleOpenConfirmationModal}
+          />
+        )}
+        {activeModal === "confirm" && (
+          <ConfirmationModal
             selectedCard={selectedCard}
             onCloseModal={handleCloseModal}
             onDeleteItem={handleDeleteItemSubmit}
