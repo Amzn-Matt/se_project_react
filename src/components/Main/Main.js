@@ -1,11 +1,10 @@
 import "./Main.css";
 import WeatherCard from "../WeatherCard/WeatherCard";
-import { defaultClothingItems } from "../../utils/Constants";
 import ItemCard from "../ItemCard/ItemCard";
 import { useMemo, useContext } from "react";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 
-function Main({ weatherTemp, onSelectCard, clothingItems }) {
+function Main({ weatherTemp, onSelectCard, clothingItems, type, day }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   const temp = weatherTemp?.temperature?.[currentTemperatureUnit] || 999;
 
@@ -25,7 +24,7 @@ function Main({ weatherTemp, onSelectCard, clothingItems }) {
 
   return (
     <main className="main">
-      <WeatherCard day={true} type={"rainy"} weatherTemp={temp} />
+      <WeatherCard day={day} type={type} weatherTemp={temp} />
 
       <section className="cards">
         <div className="card__header">
