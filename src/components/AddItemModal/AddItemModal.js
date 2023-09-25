@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import { useState } from "react";
 
-const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
+const AddItemModal = ({ isOpen, onAddItem, onCloseModal, buttonText }) => {
   const [name, setName] = useState("");
   const [imageUrl, setimageUrl] = useState("");
   const [weatherType, setWeatherType] = useState("");
@@ -38,6 +38,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
       onCloseModal={onCloseModal}
       isOpen={isOpen}
       onSubmit={handleSubmit}
+      buttonText={buttonText}
     >
       <label className="modal__form-label">
         Name
@@ -73,6 +74,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
             <input
               className="modal__form-radio-btn"
               type="radio"
+              name="radio-btn-weather"
               id="hot"
               value="hot"
               onChange={handleWeatherTypeChange}
@@ -86,6 +88,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
             <input
               className="modal__form-radio-btn"
               type="radio"
+              name="radio-btn-weather"
               id="warm"
               value="warm"
               onChange={handleWeatherTypeChange}
@@ -99,6 +102,7 @@ const AddItemModal = ({ isOpen, onAddItem, onCloseModal }) => {
             <input
               className="modal__form-radio-btn"
               type="radio"
+              name="radio-btn-weather"
               id="cold"
               value="cold"
               onChange={handleWeatherTypeChange}
