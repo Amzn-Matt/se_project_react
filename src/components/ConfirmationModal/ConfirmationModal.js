@@ -1,6 +1,11 @@
 import "./ConfirmationModal.css";
 
-const ConfirmationModal = ({ selectedCard, onCloseModal, onDeleteItem }) => {
+const ConfirmationModal = ({
+  selectedCard,
+  onCloseModal,
+  onDeleteItem,
+  buttonText,
+}) => {
   const handleDeleteItemSubmit = () => {
     onDeleteItem(selectedCard._id);
   };
@@ -23,7 +28,7 @@ const ConfirmationModal = ({ selectedCard, onCloseModal, onDeleteItem }) => {
           type="button"
           onClick={handleDeleteItemSubmit}
         >
-          Yes, delete item
+          {buttonText}
         </button>
         <button
           className="modal__confirm-cancel-btn"
