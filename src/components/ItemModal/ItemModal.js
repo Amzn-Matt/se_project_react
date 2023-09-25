@@ -1,10 +1,6 @@
 import "./ItemModal.css";
 
-function ItemModal({ selectedCard, onCloseModal, onOpenModal }) {
-  // const handleDeleteItemSubmit = () => {
-  //   onDeleteItem(selectedCard._id);
-  // };
-
+function ItemModal({ selectedCard, onCloseModal, handleDeleteButton }) {
   return (
     <div className={`modal`}>
       <div className="modal__preview-container">
@@ -23,7 +19,7 @@ function ItemModal({ selectedCard, onCloseModal, onOpenModal }) {
         <button
           type="button"
           className="modal__preview-delete-btn"
-          onClick={onOpenModal}
+          onClick={handleDeleteButton}
         >
           Delete Item
         </button>
