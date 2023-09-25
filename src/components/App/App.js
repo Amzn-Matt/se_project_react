@@ -31,6 +31,7 @@ function App() {
   const [day, setDay] = useState(true);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [clothingItems, setClothingItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleOpenModal = () => {
     setActiveModal("open");
@@ -54,34 +55,38 @@ function App() {
       : setCurrentTemperatureUnit("F");
   };
 
+  const handleSubmit = (request) => {
+    setIsLoading(true);
+    request()
+      .then(handleCloseModal)
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  };
+
   const handleAddNewItemSubmit = (values) => {
     const item = {
       name: values.name,
       imageUrl: values.imageUrl,
       weather: values.weatherType,
     };
-    addNewClothingItem(item)
-      .then((item) => {
+    const newClothesRequest = () => {
+      return addNewClothingItem(item).then((item) => {
         setClothingItems([item, ...clothingItems]);
-        handleCloseModal();
-      })
-      .catch((error) => {
-        console.log(error);
       });
+    };
+    handleSubmit(newClothesRequest);
   };
 
   const handleDeleteItemSubmit = (selectedCard) => {
-    deleteClothingItems(selectedCard)
-      .then(() => {
+    const deleteCardRequest = () => {
+      return deleteClothingItems(selectedCard).then(() => {
         const newItem = clothingItems.filter((item) => {
           return item._id !== selectedCard;
         });
         setClothingItems(newItem);
-        handleCloseModal();
-      })
-      .catch((error) => {
-        console.log(error);
       });
+    };
+    handleSubmit(deleteCardRequest);
   };
 
   useEffect(() => {
@@ -127,53 +132,53 @@ function App() {
   }, [activeModal]);
 
   return (
-    <div>
-      <CurrentTemperatureUnitContext.Provider
-        value={{ currentTemperatureUnit, handleToggleSwitchChange }}
-      >
-        <Header onOpenModal={handleOpenModal} userLocation={location} />
-        <Switch>
-          <Route exact path="/">
-            <Main
-              onSelectCard={handleSelectedCard}
-              weatherTemp={temp}
-              clothingItems={clothingItems}
-              type={forcast}
-              day={day}
-            />
-          </Route>
-          <Route path="/profile">
-            <Profile
-              clothingItems={clothingItems}
-              onSelectCard={handleSelectedCard}
-              onOpenModal={handleOpenModal}
-            />
-          </Route>
-        </Switch>
-        {activeModal === "open" && (
-          <AddItemModal
-            isOpen={activeModal === "open"}
-            onCloseModal={handleCloseModal}
-            onAddItem={handleAddNewItemSubmit}
+    <CurrentTemperatureUnitContext.Provider
+      value={{ currentTemperatureUnit, handleToggleSwitchChange }}
+    >
+      <Header onOpenModal={handleOpenModal} userLocation={location} />
+      <Switch>
+        <Route exact path="/">
+          <Main
+            onSelectCard={handleSelectedCard}
+            weatherTemp={temp}
+            clothingItems={clothingItems}
+            type={forcast}
+            day={day}
           />
-        )}
-        {activeModal === "preview" && (
-          <ItemModal
-            selectedCard={selectedCard}
-            onCloseModal={handleCloseModal}
-            onOpenModal={handleOpenConfirmationModal}
+        </Route>
+        <Route path="/profile">
+          <Profile
+            clothingItems={clothingItems}
+            onSelectCard={handleSelectedCard}
+            onOpenModal={handleOpenModal}
           />
-        )}
-        {activeModal === "confirm" && (
-          <ConfirmationModal
-            selectedCard={selectedCard}
-            onCloseModal={handleCloseModal}
-            onDeleteItem={handleDeleteItemSubmit}
-          />
-        )}
-        <Footer />
-      </CurrentTemperatureUnitContext.Provider>
-    </div>
+        </Route>
+      </Switch>
+      {activeModal === "open" && (
+        <AddItemModal
+          isOpen={activeModal === "open"}
+          onCloseModal={handleCloseModal}
+          onAddItem={handleAddNewItemSubmit}
+          buttonText={isLoading ? "Saving..." : "Add garment"}
+        />
+      )}
+      {activeModal === "preview" && (
+        <ItemModal
+          selectedCard={selectedCard}
+          onCloseModal={handleCloseModal}
+          handleDeleteButton={handleOpenConfirmationModal}
+        />
+      )}
+      {activeModal === "confirm" && (
+        <ConfirmationModal
+          selectedCard={selectedCard}
+          onCloseModal={handleCloseModal}
+          onDeleteItem={handleDeleteItemSubmit}
+          buttonText={isLoading ? "Deleting..." : "Yes, delete item"}
+        />
+      )}
+      <Footer />
+    </CurrentTemperatureUnitContext.Provider>
   );
 }
 
