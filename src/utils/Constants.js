@@ -33,7 +33,7 @@ export const WeatherOptions = [
   {
     url: require("../images/Night/night.svg").default,
     day: false,
-    type: "night",
+    type: "clear",
   },
   {
     url: require("../images/Night/rain-night.svg").default,
