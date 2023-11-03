@@ -85,7 +85,6 @@ const RegisterModal = ({ onCloseModal, buttonText, onSignUp }) => {
           placeholder="Avatar URL"
           value={avatar}
           onChange={handlAvatarChange}
-          required
         />
       </label>
     </ModalWithForm>
