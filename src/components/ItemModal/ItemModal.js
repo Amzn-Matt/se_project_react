@@ -1,6 +1,16 @@
 import "./ItemModal.css";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { useState } from "react";
 
 function ItemModal({ selectedCard, onCloseModal, handleDeleteButton }) {
+  const currentUser = useState(CurrentUserContext);
+  const isOwn = selectedCard.owner._id === currentUser._id;
+  const deleteButtonClassName = `modal__preview-delete-btn ${
+    isOwn
+      ? `modal__preview-delete-btn_visible`
+      : `modal__preview-delete-btn_hidden`
+  }`;
+
   return (
     <div className={`modal`}>
       <div className="modal__preview-container">
@@ -18,7 +28,7 @@ function ItemModal({ selectedCard, onCloseModal, handleDeleteButton }) {
         <p className="modal__preview-type"> Weather: {selectedCard.weather}</p>
         <button
           type="button"
-          className="modal__preview-delete-btn"
+          className={deleteButtonClassName}
           onClick={handleDeleteButton}
         >
           Delete Item
