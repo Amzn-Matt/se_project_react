@@ -61,3 +61,11 @@
   cursor: pointer;
   line-height: 24px; /* 120% */
 }
+
+.modal__preview-delete-btn_visible {
+  visibility: visible;
+}
+
+.modal__preview-delete-btn_hidden {
+  visibility: hidden;
+}
