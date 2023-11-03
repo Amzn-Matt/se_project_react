@@ -13,11 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import {
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom/cjs/react-router-dom.min";
+import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
 import Profile from "../Profile/Profile";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
@@ -98,9 +94,10 @@ function App() {
   const handleLogin = ({ email, password }) => {
     signin({ email, password })
       .then((res) => {
-        setCurrentUser(res);
-        localStorage.setItem("jwt", res.token);
         setLoggedIn(true);
+        console.log(res.data);
+        setCurrentUser(res.data);
+        localStorage.setItem("jwt", res.token);
         handleCloseModal();
       })
       .catch((error) => {
@@ -169,12 +166,12 @@ function App() {
       checkToken(jwt)
         .then((res) => {
           if (res) {
-            setCurrentUser(res);
+            setCurrentUser(res.data);
             setLoggedIn(true);
           }
         })
-        .catch((e) => {
-          console.log(e);
+        .catch((error) => {
+          console.log(error);
         });
     }
   }, []);
@@ -202,6 +199,7 @@ function App() {
           userLocation={location}
           onSignUp={handleOpenRegisterModal}
           onLogin={handleOpenLoginModal}
+          loggedIn={loggedIn}
         />
         <Switch>
           <Route exact path="/">
