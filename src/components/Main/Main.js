@@ -8,6 +8,8 @@ function Main({ weatherTemp, onSelectCard, clothingItems, type, day }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
   const temp = weatherTemp?.temperature?.[currentTemperatureUnit] || 999;
 
+  console.log(clothingItems);
+
   const weatherType = useMemo(() => {
     if (temp >= 86) {
       return "hot";
@@ -18,7 +20,7 @@ function Main({ weatherTemp, onSelectCard, clothingItems, type, day }) {
     }
   }, [weatherTemp]);
 
-  const filteredCards = clothingItems.filter((item) => {
+  const filteredCards = clothingItems?.filter((item) => {
     return item.weather?.toLowerCase() === weatherType;
   });
 
@@ -32,7 +34,7 @@ function Main({ weatherTemp, onSelectCard, clothingItems, type, day }) {
         </div>
 
         <ul className="card__list">
-          {filteredCards.map((item) => (
+          {filteredCards?.map((item) => (
             <ItemCard key={item._id} item={item} onSelectCard={onSelectCard} />
           ))}
         </ul>
