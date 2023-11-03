@@ -1,14 +1,17 @@
 import "./Header.css";
 import logo from "../../images/Logo.svg";
-import avatar from "../../images/Avatar.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { useContext } from "react";
 
-function Header({ onOpenModal, userLocation, onSignUp, onLogin }) {
+function Header({ onOpenModal, userLocation, onSignUp, onLogin, loggedIn }) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
   });
+  const currentUser = useContext(CurrentUserContext);
+  const currentAvatar = currentUser.avatar !== "" ? true : false;
 
   return (
     <header className="header">
@@ -24,23 +27,48 @@ function Header({ onOpenModal, userLocation, onSignUp, onLogin }) {
 
       <div className="header__profile">
         <ToggleSwitch />
-        <div>
-          <button className="header__add-btn" type="text" onClick={onOpenModal}>
-            + Add Clothes
-          </button>
-        </div>
-        <Link to="/profile">
-          <div className="header__name">Matthew Sanchez</div>
-        </Link>
-        <div>
-          <img src={avatar} alt="Avatar icon" />
-        </div>
-        <button className="header__register-btn" type="text" onClick={onSignUp}>
-          Sign Up
-        </button>
-        <button className="header__login-btn" type="text" onClick={onLogin}>
-          Login
-        </button>
+        {loggedIn ? (
+          <>
+            <div>
+              <button
+                className="header__add-btn"
+                type="text"
+                onClick={onOpenModal}
+              >
+                + Add Clothes
+              </button>
+            </div>
+            <Link to="/profile">
+              <div className="header__name">{currentUser.name}</div>
+            </Link>
+            {currentAvatar ? (
+              <div>
+                <img
+                  className="header__avatar"
+                  src={currentUser.avatar}
+                  alt="Avatar icon"
+                />
+              </div>
+            ) : (
+              <p className="header__avatar-default">
+                {currentUser.name[0].toUpperCase()}
+              </p>
+            )}
+          </>
+        ) : (
+          <>
+            <button
+              className="header__register-btn"
+              type="text"
+              onClick={onSignUp}
+            >
+              Sign Up
+            </button>
+            <button className="header__login-btn" type="text" onClick={onLogin}>
+              Login
+            </button>
+          </>
+        )}
       </div>
     </header>
   );
