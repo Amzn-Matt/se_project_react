@@ -2,7 +2,7 @@ import React from "react";
 
 const baseUrl = "http://localhost:3001";
 
-const checkResponse = (res) => {
+export const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
   }
@@ -21,11 +21,12 @@ export const getClothingItems = () => {
   });
 };
 
-export const addNewClothingItem = (item) => {
+export const addNewClothingItem = (item, token) => {
   return request(`${baseUrl}/items`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       name: item.name,
