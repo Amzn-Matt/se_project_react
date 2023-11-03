@@ -4,7 +4,7 @@ import avatar from "../../images/Avatar.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
-function Header({ onOpenModal, userLocation }) {
+function Header({ onOpenModal, userLocation, onSignUp, onLogin }) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -35,6 +35,12 @@ function Header({ onOpenModal, userLocation }) {
         <div>
           <img src={avatar} alt="Avatar icon" />
         </div>
+        <button className="header__register-btn" type="text" onClick={onSignUp}>
+          Sign Up
+        </button>
+        <button className="header__login-btn" type="text" onClick={onLogin}>
+          Login
+        </button>
       </div>
     </header>
   );
