@@ -21,3 +21,13 @@ export const signin = ({ email, password }) => {
     body: JSON.stringify({ email, password }),
   });
 };
+
+export const checkToken = (token) => {
+  return request(`${baseUrl}/users/me`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
