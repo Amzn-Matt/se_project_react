@@ -38,10 +38,10 @@ export const parseForcastData = (data) => {
 export const parseTimeOfDay = (data) => {
   const currentTime = Date.now();
   const timeOfDay = data.sys;
-  const sunrise = timeOfDay.sunrise;
-  const sunset = timeOfDay.sunset;
+  const sunrise = timeOfDay.sunrise * 1000;
+  const sunset = timeOfDay.sunset * 1000;
 
-  if (currentTime > sunrise && currentTime < sunset) {
+  if (currentTime >= sunrise && currentTime <= sunset) {
     return true;
   } else {
     return false;
