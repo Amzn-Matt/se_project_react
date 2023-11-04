@@ -22,7 +22,7 @@ export const signin = ({ email, password }) => {
   });
 };
 
-export const checkToken = ({ token }) => {
+export const checkToken = (token) => {
   return request(`${baseUrl}/users/me`, {
     method: "GET",
     headers: {
