@@ -59,12 +59,16 @@ function Header({ onOpenModal, userLocation, onSignUp, onLogin, loggedIn }) {
           <>
             <button
               className="header__register-btn"
-              type="text"
+              type="button"
               onClick={onSignUp}
             >
               Sign Up
             </button>
-            <button className="header__login-btn" type="text" onClick={onLogin}>
+            <button
+              className="header__login-btn"
+              type="button"
+              onClick={onLogin}
+            >
               Login
             </button>
           </>
