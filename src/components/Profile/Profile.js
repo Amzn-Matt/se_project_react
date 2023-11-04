@@ -7,6 +7,7 @@ function Profile({
   onOpenModal,
   onEditProfile,
   onLogout,
+  isLoggedIn,
 }) {
   return (
     <main className="profile">
@@ -15,6 +16,7 @@ function Profile({
         clothingItems={clothingItems}
         onSelectCard={onSelectCard}
         onOpenModal={onOpenModal}
+        isLoggedIn={isLoggedIn}
       />
     </main>
   );
