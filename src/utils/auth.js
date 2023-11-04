@@ -31,3 +31,16 @@ export const checkToken = (token) => {
     },
   });
 };
+
+export const editProfile = ({ name, avatar }) => {
+  const token = localStorage.getItem("jwt");
+
+  return request(`${baseUrl}/users/me}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name, avatar }),
+  });
+};
