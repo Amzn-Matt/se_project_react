@@ -28,9 +28,10 @@ import {
   getClothingItems,
   addNewClothingItem,
   deleteClothingItems,
-  editProfile,
+  addCardLike,
+  removeCardLike,
 } from "../../utils/api";
-import { signup, signin, checkToken } from "../../utils/auth";
+import { signup, signin, checkToken, editProfile } from "../../utils/auth";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
@@ -92,7 +93,7 @@ function App() {
   const handleSignUp = ({ name, avatar, email, password }) => {
     signup({ name, avatar, email, password })
       .then((user) => {
-        setCurrentUser(user.data);
+        setCurrentUser(user);
         localStorage.setItem("jwt", user.token);
         setLoggedIn(true);
         handleCloseModal();
@@ -108,7 +109,7 @@ function App() {
         const token = res.token;
         localStorage.setItem("jwt", res.token);
         return checkToken(token).then((data) => {
-          const user = data;
+          const user = data.data;
           setLoggedIn(true);
           setCurrentUser(user);
           handleCloseModal();
@@ -121,8 +122,9 @@ function App() {
   };
 
   const handleLogout = () => {
-    setLoggedIn(false);
+    setCurrentUser("");
     localStorage.removeItem("jwt");
+    setLoggedIn(false);
     history.push("/");
   };
 
@@ -134,7 +136,7 @@ function App() {
     };
     const newClothesRequest = () => {
       return addNewClothingItem(item).then((item) => {
-        setClothingItems([item, ...clothingItems]);
+        setClothingItems([item.data, ...clothingItems]);
       });
     };
     handleSubmit(newClothesRequest);
@@ -161,6 +163,30 @@ function App() {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const handleLikeClick = ({ id, isLiked, currentUser }) => {
+    const token = localStorage.getItem("jwt");
+    // Check if this card is now liked
+    isLiked
+      ? // if so, send a request to add the user's id to the card's likes array
+        // the first argument is the card's id
+        addCardLike(id, currentUser, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((c) => (c._id === id ? updatedCard : c))
+            );
+          })
+          .catch((err) => console.log(err))
+      : // if not, send a request to remove the user's id from the card's likes array
+        // the first argument is the card's id
+        removeCardLike(id, currentUser, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) =>
+              cards.map((c) => (c._id === id ? updatedCard : c))
+            );
+          })
+          .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -241,6 +267,8 @@ function App() {
               clothingItems={clothingItems}
               type={forcast}
               day={day}
+              onCardLike={handleLikeClick}
+              isLoggedIn={loggedIn}
             />
           </Route>
           <ProtectedRoute path="/profile" loggedIn={loggedIn}>
@@ -250,6 +278,7 @@ function App() {
               onOpenModal={handleOpenModal}
               onEditProfile={handleOpenEditProfileModal}
               onLogout={handleLogout}
+              isLoggedIn={loggedIn}
             />
           </ProtectedRoute>
         </Switch>
