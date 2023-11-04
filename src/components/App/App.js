@@ -13,16 +13,22 @@ import {
 import { useEffect, useState } from "react";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
+import {
+  Route,
+  Switch,
+  useHistory,
+} from "react-router-dom/cjs/react-router-dom.min";
 import Profile from "../Profile/Profile";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
+import EditProfileModal from "../Profile/EditProfileModal/EditProfileModal";
 import {
   getClothingItems,
   addNewClothingItem,
   deleteClothingItems,
+  editProfile,
 } from "../../utils/api";
 import { signup, signin, checkToken } from "../../utils/auth";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
@@ -39,6 +45,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
+  const history = useHistory();
 
   const handleOpenModal = () => {
     setActiveModal("open");
@@ -57,6 +64,10 @@ function App() {
 
   const handleOpenLoginModal = () => {
     setActiveModal("login");
+  };
+
+  const handleOpenEditProfileModal = () => {
+    setActiveModal("edit");
   };
 
   const handleSelectedCard = (card) => {
@@ -81,7 +92,7 @@ function App() {
   const handleSignUp = ({ name, avatar, email, password }) => {
     signup({ name, avatar, email, password })
       .then((user) => {
-        setCurrentUser(user);
+        setCurrentUser(user.data);
         localStorage.setItem("jwt", user.token);
         setLoggedIn(true);
         handleCloseModal();
@@ -94,15 +105,25 @@ function App() {
   const handleLogin = ({ email, password }) => {
     signin({ email, password })
       .then((res) => {
-        setLoggedIn(true);
-        console.log(res.data);
-        setCurrentUser(res.data);
+        const token = res.token;
         localStorage.setItem("jwt", res.token);
-        handleCloseModal();
+        return checkToken(token).then((data) => {
+          const user = data;
+          setLoggedIn(true);
+          setCurrentUser(user);
+          handleCloseModal();
+          history.push("/profile");
+        });
       })
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const handleLogout = () => {
+    setLoggedIn(false);
+    localStorage.removeItem("jwt");
+    history.push("/");
   };
 
   const handleAddNewItemSubmit = (values) => {
@@ -129,6 +150,17 @@ function App() {
       });
     };
     handleSubmit(deleteCardRequest);
+  };
+
+  const handleEditProfileSubmit = (data) => {
+    editProfile(data)
+      .then((res) => {
+        setCurrentUser(res.data);
+        handleCloseModal();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -216,6 +248,8 @@ function App() {
               clothingItems={clothingItems}
               onSelectCard={handleSelectedCard}
               onOpenModal={handleOpenModal}
+              onEditProfile={handleOpenEditProfileModal}
+              onLogout={handleLogout}
             />
           </ProtectedRoute>
         </Switch>
@@ -254,6 +288,14 @@ function App() {
             onCloseModal={handleCloseModal}
             buttonText={"Login"}
             onLogin={handleLogin}
+          />
+        )}
+        {activeModal === "edit" && (
+          <EditProfileModal
+            isOpen={activeModal === "edit"}
+            onCloseModal={handleCloseModal}
+            handleEditProfile={handleEditProfileSubmit}
+            buttonText={"Save changes"}
           />
         )}
         <Footer />
