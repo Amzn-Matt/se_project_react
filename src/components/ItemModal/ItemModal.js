@@ -1,10 +1,10 @@
 import "./ItemModal.css";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { useState } from "react";
+import { useContext } from "react";
 
 function ItemModal({ selectedCard, onCloseModal, handleDeleteButton }) {
-  const currentUser = useState(CurrentUserContext);
-  const isOwn = selectedCard.owner._id === currentUser._id;
+  const currentUser = useContext(CurrentUserContext);
+  const isOwn = selectedCard.owner === currentUser._id;
   const deleteButtonClassName = `modal__preview-delete-btn ${
     isOwn
       ? `modal__preview-delete-btn_visible`
