@@ -16,4 +16,33 @@
 
 .sidebar__avatar {
   margin-right: 16px;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.sidebar__edit-btn {
+  color: #000;
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 120% */
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.sidebar__logout-btn {
+  color: #000;
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 24px; /* 120% */
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
 }
