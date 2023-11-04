@@ -1,5 +1,3 @@
-import React from "react";
-
 const baseUrl = "http://localhost:3001";
 
 export const checkResponse = (res) => {
@@ -21,7 +19,9 @@ export const getClothingItems = () => {
   });
 };
 
-export const addNewClothingItem = (item, token) => {
+export const addNewClothingItem = (item) => {
+  const token = localStorage.getItem("jwt");
+
   return request(`${baseUrl}/items`, {
     method: "POST",
     headers: {
@@ -42,5 +42,17 @@ export const deleteClothingItems = (id) => {
     headers: {
       "Content-Type": "application/json",
     },
+  });
+};
+
+export const editProfile = ({ name, avatar }) => {
+  const token = localStorage.getItem("jwt");
+  return request(`${baseUrl}/users/me}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name, avatar }),
   });
 };
