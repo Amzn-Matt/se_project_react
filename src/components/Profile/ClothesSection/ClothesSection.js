@@ -8,6 +8,7 @@ const ClothesSection = ({
   onSelectCard,
   onOpenModal,
   isLoggedIn,
+  onCardLike,
 }) => {
   const currentUser = useContext(CurrentUserContext);
   const currentItems = clothingItems.filter((item) => {
@@ -33,6 +34,7 @@ const ClothesSection = ({
             item={item}
             onSelectCard={onSelectCard}
             isLoggedIn={isLoggedIn}
+            onCardLike={onCardLike}
           />
         ))}
       </ul>
