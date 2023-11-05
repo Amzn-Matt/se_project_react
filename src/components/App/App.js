@@ -91,34 +91,32 @@ function App() {
   };
 
   const handleSignUp = ({ name, avatar, email, password }) => {
-    signup({ name, avatar, email, password })
-      .then((user) => {
+    const newUserRequest = () => {
+      return signup({ name, avatar, email, password }).then((user) => {
         setCurrentUser(user);
+        handleLogin({ email, password });
         localStorage.setItem("jwt", user.token);
         setLoggedIn(true);
-        handleCloseModal();
-      })
-      .catch((error) => {
-        console.log(error);
       });
+    };
+    handleSubmit(newUserRequest);
   };
 
   const handleLogin = ({ email, password }) => {
-    signin({ email, password })
-      .then((res) => {
+    const userRequest = () => {
+      return signin({ email, password }).then((res) => {
         const token = res.token;
         localStorage.setItem("jwt", res.token);
+        console.log(res.token);
         return checkToken(token).then((data) => {
           const user = data.data;
           setLoggedIn(true);
           setCurrentUser(user);
-          handleCloseModal();
           history.push("/profile");
         });
-      })
-      .catch((error) => {
-        console.log(error);
       });
+    };
+    handleSubmit(userRequest);
   };
 
   const handleLogout = () => {
@@ -155,14 +153,12 @@ function App() {
   };
 
   const handleEditProfileSubmit = (data) => {
-    editProfile(data)
-      .then((res) => {
+    const editProfileRequest = () => {
+      return editProfile(data).then((res) => {
         setCurrentUser(res.data);
-        handleCloseModal();
-      })
-      .catch((error) => {
-        console.log(error);
       });
+    };
+    handleSubmit(editProfileRequest);
   };
 
   const handleLikeClick = ({ id, isLiked }) => {
@@ -175,7 +171,7 @@ function App() {
           .then((updatedCard) => {
             setClothingItems((items) => {
               return items.map((item) =>
-                item._id === id ? updatedCard : item
+                item._id === id ? updatedCard.data : item
               );
             });
           })
@@ -186,7 +182,7 @@ function App() {
           .then((updatedCard) => {
             setClothingItems((items) => {
               return items.map((item) =>
-                item._id === id ? updatedCard : item
+                item._id === id ? updatedCard.data : item
               );
             });
           })
@@ -313,15 +309,19 @@ function App() {
         {activeModal === "register" && (
           <RegisterModal
             onCloseModal={handleCloseModal}
-            buttonText={"Next"}
+            buttonText={isLoading ? "Next..." : "Next"}
             onSignUp={handleSignUp}
+            altButtonText={"or Log in"}
+            onAltButton={handleOpenLoginModal}
           />
         )}
         {activeModal === "login" && (
           <LoginModal
             onCloseModal={handleCloseModal}
-            buttonText={"Login"}
+            buttonText={isLoading ? "Loging In...." : "Login"}
             onLogin={handleLogin}
+            altButtonText={"or Register"}
+            onAltButton={handleOpenRegisterModal}
           />
         )}
         {activeModal === "edit" && (
@@ -329,7 +329,7 @@ function App() {
             isOpen={activeModal === "edit"}
             onCloseModal={handleCloseModal}
             handleEditProfile={handleEditProfileSubmit}
-            buttonText={"Save changes"}
+            buttonText={isLoading ? "Saving..." : "Save changes"}
           />
         )}
         <Footer />
