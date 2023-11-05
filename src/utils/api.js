@@ -48,24 +48,26 @@ export const deleteClothingItems = (id) => {
   });
 };
 
-export const addCardLike = (id, user, token) => {
+export const addCardLike = (id) => {
+  const token = localStorage.getItem("jwt");
+
   return request(`${baseUrl}/items/${id}/likes`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ user }),
   });
 };
 
-export const removeCardLike = (id, user, token) => {
+export const removeCardLike = (id) => {
+  const token = localStorage.getItem("jwt");
+
   return request(`${baseUrl}/items/${id}/likes`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ user }),
   });
 };
