@@ -22,13 +22,15 @@ function ModalWithForm({
             <button className="modal__submit-btn" type="submit">
               {buttonText}
             </button>
-            <button
-              className="modal__alt-btn"
-              type="button"
-              onClick={onAltButton}
-            >
-              {altButtonText}
-            </button>
+            {altButtonText && (
+              <button
+                className="modal__alt-btn"
+                type="button"
+                onClick={onAltButton}
+              >
+                {altButtonText}
+              </button>
+            )}
           </div>
         </form>
       </div>
