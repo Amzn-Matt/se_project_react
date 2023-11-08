@@ -1,5 +1,6 @@
 import ModalWithForm from "../../ModalWithForm/ModalWithForm";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
+import { CurrentUserContext } from "../../../contexts/CurrentUserContext";
 
 const EditProfileModal = ({
   isOpen,
@@ -9,6 +10,7 @@ const EditProfileModal = ({
 }) => {
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState("");
+  const currentUser = useContext(CurrentUserContext);
 
   const handleNameChage = (e) => {
     setName(e.target.value);
@@ -22,6 +24,13 @@ const EditProfileModal = ({
     e.preventDefault();
     handleEditProfile({ name, avatar });
   };
+
+  useEffect(() => {
+    if (isOpen === true) {
+      setName(currentUser.name);
+      setAvatar(currentUser.avatar);
+    }
+  }, [isOpen]);
 
   return (
     <ModalWithForm
