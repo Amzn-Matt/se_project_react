@@ -224,8 +224,15 @@ function App() {
       checkToken(jwt)
         .then((res) => {
           if (res) {
-            setCurrentUser(res.data);
             setLoggedIn(true);
+            setCurrentUser(res.data);
+          }
+        })
+        .then(() => {
+          if (currentUser) {
+            history.push("/profile");
+          } else {
+            history.push("/");
           }
         })
         .catch((error) => {
